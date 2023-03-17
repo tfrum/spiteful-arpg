@@ -32,28 +32,20 @@ class Player(pygame.sprite.Sprite):
         # making player move with mouse - This isn't working as expected.
 
         if mouse[0]:
-           # update the direction vector based on the mouse position
-           mouse_pos = pygame.mouse.get_pos()
-           self.direction = pygame.math.Vector2(mouse_pos) - pygame.math.Vector2(self.rect.center)
-           # In order to normalize  the vector it can't be zero.
-           if self.direction.magnitude() > 0:
+            # update the direction vector based on the mouse position
+            mouse_pos = pygame.mouse.get_pos()
+            print("Mouse Position:", mouse_pos)
+
+            self.direction = pygame.math.Vector2(mouse_pos) - pygame.math.Vector2(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2)
+            # In order to normalize  the vector it can't be zero.
+            if self.direction.magnitude() > 0:
                 self.direction.normalize_ip()
 
 
-
-
-                
-        #else:
+        else:
            # reset the direction when mouse released to stop movement
-           #self.direction = pygame.math.Vector2(0, 0)
+           self.direction = pygame.math.Vector2(0, 0)
         
-        print(self.direction)
-
-
-
-
-
-
     def move(self,dt):
         self.pos += self.direction * self.speed * dt
         self.rect.center = self.pos
