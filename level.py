@@ -1,6 +1,7 @@
 import pygame
 from settings import *
 from player import Player
+from sprites import Generic
 
 # this class will actually render the player, environment, enemies.
 class Level:
@@ -10,7 +11,7 @@ class Level:
         self.display_surface = pygame.display.get_surface()
 
         # create the sprite group. Sprite groups are a part of pygame
-        self.all_sprites = pygame.sprite.Group()
+        self.all_sprites = CameraGroup()
 
         # here we call the setup method which creates the player
         self.setup()
@@ -21,13 +22,35 @@ class Level:
         # we initialized player to take a position and a group in player.py
         # I'm going to set it to be central to the screen at all times. This will change when we have movement.
         self.player = Player((SCREEN_WIDTH/2,SCREEN_HEIGHT/2), self.all_sprites)
+        #For now this draws the background as a reference point.
+        Generic(
+            pos = (0,0),
+            surf = pygame.image.load('assets/grasstile.png').convert_alpha(),
+            groups = self.all_sprites,
+            z = LAYERS['ground'])
+        
 
     # run the initialized Level
     def run(self,dt):
 
         # fill the underlying surface with black
         self.display_surface.fill('black')
-        self.all_sprites.draw(self.display_surface)
+        self.all_sprites.custom_draw()
 
         # this update method gets passed to all the chldren of all_sprites (player, enemies, etc)
         self.all_sprites.update(dt)
+
+
+# this is the class that allows us to draw the sprite rect and sprite image 
+# separately.
+class CameraGroup(pygame.sprite.Group):
+    def __init__(self):
+        super().__init__()
+        self.display_surface = pygame.display.get_surface()
+
+    # this method allows us to draw things in order of y-position for overlap
+    def custom_draw(self):
+        for layer in LAYERS.values(): 
+            for sprite in self.sprites():
+                if sprite in self.sprites():
+                    self.display_surface.blit(sprite.image, sprite.rect)
