@@ -29,7 +29,8 @@ class Player(pygame.sprite.Sprite):
         keys = pygame.key.get_pressed()
         mouse = pygame.mouse.get_pressed()
 
-        # making player move with mouse
+        # making player move with mouse - This isn't working as expected.
+
         if mouse[0]:
            # update the direction vector based on the mouse position
            mouse_pos = pygame.mouse.get_pos()
@@ -42,9 +43,9 @@ class Player(pygame.sprite.Sprite):
 
 
                 
-        else:
+        #else:
            # reset the direction when mouse released to stop movement
-           self.direction = pygame.math.Vector2(0, 0)
+           #self.direction = pygame.math.Vector2(0, 0)
         
         print(self.direction)
 

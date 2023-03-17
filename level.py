@@ -20,12 +20,11 @@ class Level:
     def setup(self):
         # create the player
         # we initialized player to take a position and a group in player.py
-        # I'm going to set it to be central to the screen at all times. This will change when we have movement.
         self.player = Player((SCREEN_WIDTH/2,SCREEN_HEIGHT/2), self.all_sprites)
         #For now this draws the background as a reference point.
         Generic(
             pos = (0,0),
-            surf = pygame.image.load('assets/grasstile.png').convert_alpha(),
+            surf = pygame.image.load('assets/testmap.png').convert_alpha(),
             groups = self.all_sprites,
             z = LAYERS['ground'])
         
@@ -35,7 +34,7 @@ class Level:
 
         # fill the underlying surface with black
         self.display_surface.fill('black')
-        self.all_sprites.custom_draw()
+        self.all_sprites.custom_draw(self.player)
 
         # this update method gets passed to all the chldren of all_sprites (player, enemies, etc)
         self.all_sprites.update(dt)
@@ -47,10 +46,16 @@ class CameraGroup(pygame.sprite.Group):
     def __init__(self):
         super().__init__()
         self.display_surface = pygame.display.get_surface()
+        self.offset = pygame.math.Vector2()
 
     # this method allows us to draw things in order of y-position for overlap
-    def custom_draw(self):
+    def custom_draw(self, player):
+        self.offset.x = player.rect.centerx - SCREEN_WIDTH / 2
+        self.offset.y = player.rect.centery - SCREEN_HEIGHT / 2
+
         for layer in LAYERS.values(): 
             for sprite in self.sprites():
-                if sprite in self.sprites():
-                    self.display_surface.blit(sprite.image, sprite.rect)
+                    if sprite.z == layer:
+                        offset_rect = sprite.rect.copy()
+                        offset_rect.center -= self.offset
+                        self.display_surface.blit(sprite.image, offset_rect)
