@@ -3,7 +3,7 @@ import pygame, sys
 # import out settings file
 from settings import *
 # import our level renderer
-from level import Level
+from draw import Level
 
 # create the game object and use settings.py to get window size
 # "self" refers to the current instance of the class
@@ -25,7 +25,7 @@ class Game:
                     pygame.quit()
                     sys.exit()
 
-            # grabbing deltatime
+            # grabbing deltatime from self.clock called above
             dt = self.clock.tick() / 1000
             # before we update the display we need to update the level
             # the level class needs deltatime to run

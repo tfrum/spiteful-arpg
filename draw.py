@@ -1,7 +1,7 @@
 import pygame
 from settings import *
 from player import Player
-from sprites import Generic
+from layers import Generic
 
 # this class will actually render the player, environment, enemies.
 class Level:
