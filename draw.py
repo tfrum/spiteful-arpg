@@ -18,15 +18,22 @@ class LevelSetup:
         self.setup()
 
     def setup(self):
-        #load_pygame('../data/town.tmx')
-        self.player = Player((SCREEN_WIDTH/2,SCREEN_HEIGHT/2), self.all_sprites)
+        tmx_data = load_pygame('assets/testmap.tmx')
 
-        #For now this draws the background as a reference point.
+        # backdrop
         Generic(
             pos = (0,0),
             surf = pygame.image.load('assets/testmap.png').convert_alpha(),
             groups = self.all_sprites,
             z = LAYERS['backdrop'])
+
+        # ground - For now this is rendered independently.
+        for x, y, surf in tmx_data.get_layer_by_name('ground').tiles():
+                Generic((x * TILE_SIZE, y * (TILE_SIZE / 2)), surf, groups = self.all_sprites, z = LAYERS['ground'])
+
+        # player - main 
+        self.player = Player((SCREEN_WIDTH/2,SCREEN_HEIGHT/2), self.all_sprites)
+
         
     def run(self,dt): 
         self.display_surface.fill('black')
@@ -52,5 +59,3 @@ class CameraGroup(pygame.sprite.Group):
                         offset_rect = sprite.rect.copy()
                         offset_rect.center -= self.offset
                         self.display_surface.blit(sprite.image, offset_rect)
-                        print("O: ", offset_rect.center)
-                        print("P: ", player.pos)
