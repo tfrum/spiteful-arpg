@@ -18,6 +18,7 @@ class LevelSetup:
         self.setup()
 
     def setup(self):
+        #load_pygame('../data/town.tmx')
         self.player = Player((SCREEN_WIDTH/2,SCREEN_HEIGHT/2), self.all_sprites)
 
         #For now this draws the background as a reference point.
