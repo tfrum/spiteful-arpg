@@ -29,7 +29,10 @@ class LevelSetup:
 
         # ground - For now this is rendered independently.
         for x, y, surf in tmx_data.get_layer_by_name('ground').tiles():
-                Generic((x * TILE_SIZE, y * (TILE_SIZE / 2)), surf, groups = self.all_sprites, z = LAYERS['ground'])
+            if y % 2 == 0:
+                Generic((x * TILE_SIZE - 16, y * (TILE_SIZE / 2) - y * 8 ), surf, groups = self.all_sprites, z = LAYERS['ground'])
+            else:
+                Generic((x * TILE_SIZE, y * (TILE_SIZE / 2) - y * 8 ), surf, groups = self.all_sprites, z = LAYERS['ground'])
 
         # player - main 
         self.player = Player((SCREEN_WIDTH/2,SCREEN_HEIGHT/2), self.all_sprites)

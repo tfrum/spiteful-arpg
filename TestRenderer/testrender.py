@@ -1,10 +1,19 @@
 import pygame, sys, time, random
 from pygame.locals import *
+pygame.init()
+pygame.display.set_caption('The Diablo Scrolls VII')
+screen = pygame.display.set_mode((900, 900),0,32)
+display = pygame.Surface((400, 400))
 
 grass_img = pygame.image.load('TestRenderer/grasstile.png').convert()
 
+#Sets the color to treat as transparent in the background
+
 grass_img.set_colorkey((0, 0, 0))
+
 f = open('TestRenderer/testmap.txt')
+
+#Opens out basic map file.
 map_data = [[int(c) for c in row] for row in f.read().split('\n')]
 f.close()
 print(map_data)
