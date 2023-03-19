@@ -4,6 +4,7 @@ from settings import *
 # this class refers back to level and imports the position, surface, and rect separately
 # it allows us to create objects to be drawn by layers. All other types of spriteobject will
 # inherit from this class.
+# z here uses 'main' as a default, if no other value is set.
 class Generic(pygame.sprite.Sprite):
     def __init__(self, pos, surf, groups, z = LAYERS['main']):
         super().__init__(groups)

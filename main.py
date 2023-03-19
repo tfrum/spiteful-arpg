@@ -3,7 +3,7 @@ import pygame, sys
 # import out settings file
 from settings import *
 # import our level renderer
-from draw import Level
+from draw import LevelSetup
 
 # create the game object and use settings.py to get window size
 # "self" refers to the current instance of the class
@@ -14,7 +14,7 @@ class Game:
         pygame.display.set_caption('spiteful-arpg')
         self.clock = pygame.time.Clock()
         # create the level object
-        self.level = Level()
+        self.level = LevelSetup()
         
     def run(self):
         # main game loop

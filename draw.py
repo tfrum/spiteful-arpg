@@ -2,9 +2,10 @@ import pygame
 from settings import *
 from player import Player
 from layers import Generic
+from pytmx.util_pygame import load_pygame
 
 # this class will actually render the player, environment, enemies.
-class Level:
+class LevelSetup:
     def __init__(self):
         
         # grab the display surface called in __main__ so that the level object can draw to it
@@ -16,7 +17,6 @@ class Level:
         # here we call the setup method which creates the player
         self.setup()
 
-
     def setup(self):
         # create the player
         # we initialized player to take a position and a group in player.py
@@ -26,17 +26,11 @@ class Level:
             pos = (0,0),
             surf = pygame.image.load('assets/testmap.png').convert_alpha(),
             groups = self.all_sprites,
-            z = LAYERS['ground'])
+            z = LAYERS['backdrop'])
         
-
-    # run the initialized Level
-    def run(self,dt):
-
-        # fill the underlying surface with black
+    def run(self,dt): 
         self.display_surface.fill('black')
         self.all_sprites.custom_draw(self.player)
-
-        # this update method gets passed to all the chldren of all_sprites (player, enemies, etc)
         self.all_sprites.update(dt)
 
 

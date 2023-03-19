@@ -21,7 +21,7 @@ class Player(pygame.sprite.Sprite):
         self.direction = pygame.math.Vector2()
         # set position to be the center of the player rect
         self.pos = pygame.math.Vector2(self.rect.center)
-        self.speed = 400
+        self.speed = 100
 
     # Mouse input for the player object
     # this will need to be updated to not run if player has clicked on an entity

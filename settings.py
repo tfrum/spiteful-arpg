@@ -10,5 +10,6 @@ TILE_SIZE = 32
 LAYERS = {
     'backdrop': 0,
     'ground' : 1,
-    'main' : 2
+    'loot' : 2,
+    'main' : 3 # this contains the player, entities, mobs, etc
 }
