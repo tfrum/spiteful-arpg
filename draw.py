@@ -18,9 +18,8 @@ class LevelSetup:
         self.setup()
 
     def setup(self):
-        # create the player
-        # we initialized player to take a position and a group in player.py
         self.player = Player((SCREEN_WIDTH/2,SCREEN_HEIGHT/2), self.all_sprites)
+
         #For now this draws the background as a reference point.
         Generic(
             pos = (0,0),
@@ -34,15 +33,14 @@ class LevelSetup:
         self.all_sprites.update(dt)
 
 
-# this is the class that allows us to draw the sprite rect and sprite image 
-# separately.
+# the class that allows us to draw the sprite rect and sprite image separately.
 class CameraGroup(pygame.sprite.Group):
     def __init__(self):
         super().__init__()
         self.display_surface = pygame.display.get_surface()
         self.offset = pygame.math.Vector2()
 
-    # this method allows us to draw things in order of y-position for overlap
+    # draw things in order of y-position for overlap
     def custom_draw(self, player):
         self.offset.x = player.rect.centerx - SCREEN_WIDTH / 2
         self.offset.y = player.rect.centery - SCREEN_HEIGHT / 2
