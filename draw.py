@@ -21,11 +21,11 @@ class LevelSetup:
         tmx_data = load_pygame('assets/testmap.tmx')
 
         # backdrop
-        Generic(
-            pos = (0,0),
-            surf = pygame.image.load('assets/testmap.png').convert_alpha(),
-            groups = self.all_sprites,
-            z = LAYERS['backdrop'])
+        #Generic(
+        #    pos = (0,0),
+        #    surf = pygame.image.load('assets/testmap.png').convert_alpha(),
+        #    groups = self.all_sprites,
+        #    z = LAYERS['backdrop'])
 
         # ground - For now this is rendered independently.
         for x, y, surf in tmx_data.get_layer_by_name('ground').tiles():

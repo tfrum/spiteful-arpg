@@ -1,6 +1,7 @@
 import pygame
 import math
 from settings import *
+from support import *
 
 # create a player class that inherits from pygame.sprite.Sprite
 # this is because the player is a sprite, lmao
@@ -8,24 +9,45 @@ class Player(pygame.sprite.Sprite):
 
     # initialize only position (pos) and the group for now
     def __init__(self, pos, group):
-        # super() is being used to initialize the parent/superclass Sprite which player inherits from
         super().__init__(group)
-
-        self.image = pygame.Surface((28,69))
-        self.image.fill ('blue')
-        self.rect = self.image.get_rect(center = pos)
-        #This is the z position that tells the drawer which order to draw in.
+        
+        # attributes
         self.z = LAYERS['main']
+        self.status = 'south'
 
-        # movement
-        # define the direction stat for the player
+        # animation
+        self.import_assets()
+        self.frame_index = 0
+        self.image = self.animations[self.status][self.frame_index]
+        self.rect = self.image.get_rect(center = pos)
+
+        #self.image = pygame.image.load('assets/player.png').convert_alpha()
+        #self.image = pygame.transform.scale(self.image, (28,69))
+
+        # movement variables
         self.direction = pygame.math.Vector2()
-        # set position to be the center of the player rect
         self.pos = pygame.math.Vector2(self.rect.center)
         self.speed = 400
 
     # Mouse input for the player object
     # this will need to be updated to not run if player has clicked on an entity
+
+    def import_assets(self):
+        self.animations = {'south':[]}
+        #self.animations = {'north':[], 'northeast':[], 'east':[], 'southeast':[],
+        #                   'south':[], 'southwest':[], 'west':[], 'northwest':[]}
+
+        for animation in self.animations.keys():
+            full_path = 'assets/player/animations/' + animation
+            self.animations[animation] = import_folder(full_path)
+
+    def animate(self, dt):
+        self.frame_index += 4 * dt
+        if self.frame_index >= len(self.animations[self.status]):
+            self.frame_index = 0
+
+        self.image = self.animations[self.status][int(self.frame_index)]
+
     def input(self):
         keys = pygame.key.get_pressed()
         mouse = pygame.mouse.get_pressed()
@@ -53,7 +75,9 @@ class Player(pygame.sprite.Sprite):
         self.pos.y += self.directionCartesian.y * self.speed * .7 * dt
         self.rect.center = self.pos
         print(round(self.pos.x, 0), round(self.pos.y, 0))
+
     # run the update method passed from all_sprites group
     def update(self, dt):
         self.input()
         self.move(dt)
+        self.animate(dt)
