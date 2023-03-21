@@ -21,13 +21,11 @@ class Player(pygame.sprite.Sprite):
         self.image = self.animations[self.status][self.frame_index]
         self.rect = self.image.get_rect(center = pos)
 
-        #self.image = pygame.image.load('assets/player.png').convert_alpha()
-        #self.image = pygame.transform.scale(self.image, (28,69))
 
         # movement variables
         self.direction = pygame.math.Vector2()
         self.pos = pygame.math.Vector2(self.rect.center)
-        self.speed = 400
+        self.speed = 150
 
     # Mouse input for the player object
     # this will need to be updated to not run if player has clicked on an entity

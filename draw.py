@@ -27,7 +27,7 @@ class LevelSetup:
         #    groups = self.all_sprites,
         #    z = LAYERS['backdrop'])
 
-        # ground - For now this is rendered independently.
+        # ground
         for x, y, surf in tmx_data.get_layer_by_name('ground').tiles():
             if y % 2 == 0:
                 Generic((x * TILE_SIZE - 16, y * (TILE_SIZE / 2) - y * 8 ), surf, groups = self.all_sprites, z = LAYERS['ground'])
@@ -40,6 +40,8 @@ class LevelSetup:
         
     def run(self,dt): 
         self.display_surface.fill('black')
+
+        # Draw the sprites. This works because all the classes are inheriting from pygame.sprite.Sprite
         self.all_sprites.custom_draw(self.player)
         self.all_sprites.update(dt)
 
