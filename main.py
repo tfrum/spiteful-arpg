@@ -1,6 +1,4 @@
-# sys library is only used to close the game
 import pygame, sys
-# import out settings file
 from settings import *
 # import our level renderer
 from draw import LevelSetup
