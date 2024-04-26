@@ -32,7 +32,6 @@ class Game:
             pygame.display.update()
 
 # create an instance of the game and run it
-# this uses a special function in Python that checks if it's being run as the main module and not imported
 if __name__ == '__main__':
     game = Game()
     game.run()
